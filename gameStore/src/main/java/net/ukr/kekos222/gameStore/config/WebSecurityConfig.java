@@ -20,7 +20,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.
-                authorizeRequests()
+                csrf().disable()
+                .authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers(HttpMethod.GET, "/**").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
                 .antMatchers(HttpMethod.POST, "/**").hasRole(Role.ADMIN.name())
@@ -38,12 +39,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new InMemoryUserDetailsManager(
                 User.builder()
                         .username("admin")
-                        .password(passwordEncoder().encode("12345"))
+                        .password(passwordEncoder().encode("admin"))
                         .roles(Role.ADMIN.name())
                         .build(),
                 User.builder()
                         .username("user")
-                        .password(passwordEncoder().encode("12345"))
+                        .password(passwordEncoder().encode("user"))
                         .roles(Role.USER.name())
                         .build()
         );

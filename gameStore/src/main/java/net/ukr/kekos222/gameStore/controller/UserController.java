@@ -1,7 +1,7 @@
 package net.ukr.kekos222.gameStore.controller;
 
 import net.ukr.kekos222.gameStore.entity.UserEntity;
-import net.ukr.kekos222.gameStore.exception.NoUserFoundException;
+import net.ukr.kekos222.gameStore.exception.NoEntityFoundException;
 import net.ukr.kekos222.gameStore.exception.UserAlreadyExistException;
 import net.ukr.kekos222.gameStore.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ public class UserController {
     public ResponseEntity getOneUserById(@PathVariable Long id){
         try{
             return ResponseEntity.ok().body(userService.findUserById(id));
-        } catch (NoUserFoundException e){
+        } catch (NoEntityFoundException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -44,8 +44,9 @@ public class UserController {
         try{
             userService.deleteUserById(id);
             return ResponseEntity.ok().body("User deleted. id: " + id);
-        } catch(NoUserFoundException e) {
+        } catch(NoEntityFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
 }
