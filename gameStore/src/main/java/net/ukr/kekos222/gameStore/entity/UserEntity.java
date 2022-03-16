@@ -1,6 +1,7 @@
 package net.ukr.kekos222.gameStore.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -12,6 +13,9 @@ public class UserEntity {
     private String name;
     private String email;
     private String password;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userEntity")
+    private List<GameEntity> games;
 
     public UserEntity() {
     }
@@ -46,5 +50,13 @@ public class UserEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<GameEntity> getGames() {
+        return games;
+    }
+
+    public void setGames(List<GameEntity> games) {
+        this.games = games;
     }
 }
