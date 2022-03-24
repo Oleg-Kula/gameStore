@@ -8,6 +8,9 @@ import net.ukr.kekos222.gameStore.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class GameService {
 
@@ -29,5 +32,9 @@ public class GameService {
         GameEntity gameEntity = gameRepo.getById(gameId);
         gameEntity.setUserEntity(userRepo.getById(userId));
         gameRepo.save(gameEntity);
+    }
+
+    public List<Game> getAllGames(){
+        return gameRepo.findAll().stream().map(Game::toModel).collect(Collectors.toList());
     }
 }
